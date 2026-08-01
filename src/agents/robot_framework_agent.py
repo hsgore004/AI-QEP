@@ -14,6 +14,7 @@ class RobotFrameworkAgent:
         self,
         requirement: Requirement,
         ui_test_cases: str,
+        keyword_catalog: str,
     ) -> str:
 
         user_prompt = f"""
@@ -25,6 +26,21 @@ Requirement:
 Manual UI Test Cases:
 
 {ui_test_cases}
+
+----------------------------------------
+
+Available Robot Framework Keywords:
+
+{keyword_catalog}
+
+----------------------------------------
+
+IMPORTANT RULES
+
+1. Use ONLY the keywords listed above.
+2. Never invent new Robot Framework keywords.
+3. If an exact keyword is unavailable, use the closest matching keyword.
+4. The generated Robot Framework test suite must be executable using the available keywords only.
 """
 
         request = LLMRequest(

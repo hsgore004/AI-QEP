@@ -14,6 +14,12 @@ from agents.robot_framework_agent import RobotFrameworkAgent
 from builders.robot_builder import RobotBuilder
 from loaders.requirement_loader import RequirementLoader
 
+from evaluators.deepeval_evaluator import DeepEvalEvaluator
+from evaluators.evaluation_manager import EvaluationManager
+
+from generators.generation_manager import GenerationManager
+from loaders.keyword_catalog_loader import KeywordCatalogLoader
+
 from pathlib import Path
 import shutil
 import subprocess
@@ -45,31 +51,41 @@ class AIQEPPipeline:
         )
         print("[✓] Requirement Agent completed")
 
+        keyword_catalog = KeywordCatalogLoader().load()
 
-        # UI Test Case Agent
-        ui_agent = UITestCaseAgent(llm_service)
-        context.ui_test_cases = ui_agent.execute(
+        # Generation Layer
+
+        generation_manager = GenerationManager(
+            llm_service,
+            keyword_catalog,
+        )
+
+        artifacts = generation_manager.generate(
             context.requirement_model
         )
-        print("[✓] UI Test Case Agent completed")
+
+        context.ui_test_cases = artifacts.ui_test_cases
+        context.api_test_cases = artifacts.api_test_cases
+        context.robot_test_cases = artifacts.robot_test_cases
+
+        print("[✓] Generation Layer completed")
 
 
-        # API Test Case Agent
-        api_agent = ApiTestCaseAgent(llm_service)
-        context.api_test_cases = api_agent.execute(
-            context.requirement_model
-        )
-        print("[✓] API Test Case Agent completed")
+        # Evaluation Layer
 
+        evaluation_manager = EvaluationManager()
 
-        # Robot Framework Agent
-        robot_agent = RobotFrameworkAgent(llm_service)
-        context.robot_test_cases = robot_agent.execute(
-            context.requirement_model,
+        results = evaluation_manager.evaluate(
+            context.requirement_text,
             context.ui_test_cases,
         )
-        print("[✓] Robot Framework Agent completed")
 
+        context.deep_eval_result = results[0]
+
+        print(
+            f"[✓] {context.deep_eval_result.name} completed "
+            f"(Score: {context.deep_eval_result.score:.2f})"
+        )
 
 
         # Robot Builder
@@ -114,12 +130,17 @@ class AIQEPPipeline:
         print("\n========================================")
         print("         AI-QEP EXECUTION SUMMARY")
         print("========================================")
+
         print("[✓] Requirement Agent")
         print("[✓] UI Test Case Agent")
+        print(
+        f"[✓] {context.deep_eval_result.name:<22}: "
+        f"{context.deep_eval_result.score:.2f}")
         print("[✓] API Test Case Agent")
         print("[✓] Robot Framework Agent")
         print("[✓] Robot Builder")
         print("[✓] Robot Execution")
+
         print("========================================")
         print("Execution completed successfully.")
         print("========================================")

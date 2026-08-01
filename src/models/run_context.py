@@ -4,7 +4,7 @@ from typing import Optional
 
 from models.requirement import Requirement
 from models.execution_summary import ExecutionSummary
-
+from models.evaluation_result import EvaluationResult
 
 @dataclass
 class RunContext:
@@ -35,3 +35,7 @@ class RunContext:
     # Timing
     start_time: float = 0
     end_time: float = 0
+
+
+    # Evaluation
+    deep_eval_result: EvaluationResult | None = None
