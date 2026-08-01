@@ -20,6 +20,12 @@ from evaluators.evaluation_manager import EvaluationManager
 from generators.generation_manager import GenerationManager
 from loaders.keyword_catalog_loader import KeywordCatalogLoader
 
+
+from validators.capability_validation_service import (
+    CapabilityValidationService,
+)
+
+
 from pathlib import Path
 import shutil
 import subprocess
@@ -94,6 +100,36 @@ class AIQEPPipeline:
             context.robot_test_cases
         )
         print("[✓] Robot Builder completed")
+
+        capability_report = CapabilityValidationService().validate(
+            context.robot_suite
+        )
+
+        print(capability_report.summary())
+
+        if not capability_report.can_execute:
+            return
+
+
+        if not capability_report.can_execute:
+
+            print("\n========================================")
+            print("      AI-QEP CAPABILITY REPORT")
+            print("========================================")
+
+            print("\nExecution Blocked\n")
+
+            print("Missing Business Keywords:\n")
+
+            for keyword in capability_report.missing_keywords:
+                print(f" - {keyword}")
+
+            print("\nPlease implement the above business")
+            print("keywords before executing the suite.")
+
+            print("\n========================================")
+
+            return
 
 
         # Robot Execution
