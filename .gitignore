@@ -24,3 +24,7 @@ output/
 dist/
 build/
 *.egg-info/
+
+
+# Robot Framework Reports
+robot/reports/
