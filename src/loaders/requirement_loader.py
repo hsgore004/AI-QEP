@@ -3,10 +3,14 @@ from pathlib import Path
 
 class RequirementLoader:
 
-    def load(self) -> str:
+    def load(
+        self,
+        requirement_file: str,
+    ) -> str:
 
-        requirement_file = Path("requirements/login_requirement.md")
+        requirement_path = Path(requirement_file)
+        
 
-        return requirement_file.read_text(
+        return requirement_path.read_text(
             encoding="utf-8"
         )

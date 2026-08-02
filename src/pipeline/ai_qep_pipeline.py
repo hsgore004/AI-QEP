@@ -1,5 +1,5 @@
 from openai import OpenAI
-
+import time
 from config import settings
 
 from llm.providers.openai_provider import OpenAIProvider
@@ -20,10 +20,14 @@ from evaluators.evaluation_manager import EvaluationManager
 from generators.generation_manager import GenerationManager
 from loaders.keyword_catalog_loader import KeywordCatalogLoader
 
+from validators.robot_validator import RobotValidator
 
 from validators.capability_validation_service import (
     CapabilityValidationService,
 )
+
+from validators.ui_testcase_validator import UITestCaseValidator
+
 
 
 from pathlib import Path
@@ -33,12 +37,17 @@ import subprocess
 
 class AIQEPPipeline:
 
-    def run(self):
-
+    def run(
+        self,
+        requirement_file: str,
+    ):
+        start_time = time.time()
         loader = RequirementLoader()
 
         context = RunContext(
-            requirement_text=loader.load()
+            requirement_text=loader.load(
+                requirement_file
+            )
         )
 
 
@@ -55,6 +64,11 @@ class AIQEPPipeline:
         context.requirement_model = requirement_agent.execute(
             context.requirement_text
         )
+
+        print("\n===== Requirement Model =====")
+        print(context.requirement_model.model_dump_json(indent=2))
+        print("=============================\n")
+
         print("[✓] Requirement Agent completed")
 
         keyword_catalog = KeywordCatalogLoader().load()
@@ -71,44 +85,137 @@ class AIQEPPipeline:
         )
 
         context.ui_test_cases = artifacts.ui_test_cases
+
+        print("\n===== UI TEST CASES =====")
+        print(context.ui_test_cases)
+        print("=========================\n")
+
         context.api_test_cases = artifacts.api_test_cases
         context.robot_test_cases = artifacts.robot_test_cases
+
+
+        # UI Test Case Validation + Repair
+
+        context.ui_test_cases = self._validate_and_repair(
+            "ui_test_cases",
+            context.ui_test_cases,
+            UITestCaseValidator(),
+            generation_manager,
+            context.requirement_model,
+            context.requirement_model,
+            context.ui_test_cases,
+        )
+
+        print("[✓] UI Test Case Validation completed")
+
+#===============================================
+
+
+#===============================================
+
+
+
+        robot_validator = RobotValidator()
+
+        validation_result = robot_validator.validate(
+            context.robot_test_cases
+        )
+
+        if not validation_result.is_valid:
+
+            print("\n========================================")
+            print(" Robot Validation Failed")
+            print("========================================")
+
+            for error in validation_result.errors:
+                print(f" - {error}")
+
+            return
+
+        context.robot_test_cases = robot_validator.normalize(
+            context.robot_test_cases
+        )
+
+        print("\n===== UI TEST CASES =====")
+        print(context.ui_test_cases)
+        print("=========================\n")
+
+        print("\n===== ROBOT TEST CASES =====")
+        print(context.robot_test_cases)
+        print("============================\n")
 
         print("[✓] Generation Layer completed")
 
 
         # Evaluation Layer
 
-        evaluation_manager = EvaluationManager()
+        evaluation_manager = EvaluationManager(
+            llm_service,
+        )
 
         results = evaluation_manager.evaluate(
-            context.requirement_text,
+            context.requirement_model,
             context.ui_test_cases,
         )
 
-        context.deep_eval_result = results[0]
+        for result in results:
 
-        print(
-            f"[✓] {context.deep_eval_result.name} completed "
-            f"(Score: {context.deep_eval_result.score:.2f})"
-        )
+            print(
+                f"[✓] {result.name} completed"
+            )
 
+            print(result.reason)
+#========================================
 
-        # Robot Builder
-        robot_builder = RobotBuilder()
-        context.robot_suite = robot_builder.build(
+        # Robot Validation
+        robot_validator = RobotValidator()
+        validation_result = robot_validator.validate(
             context.robot_test_cases
         )
+        if not validation_result.is_valid:
+            print("\n========================================")
+            print(" Robot Validation Failed")
+            print("========================================")
+            for error in validation_result.errors:
+                print(f" - {error}")
+            return
+
+        normalized_robot = robot_validator.normalize(
+            context.robot_test_cases
+        )
+
+        validation_result = robot_validator.validate(
+            normalized_robot
+        )
+
+        if not validation_result.is_valid:
+
+            print("\n========================================")
+            print(" Robot Validation Failed After Normalization")
+            print("========================================")
+
+            for error in validation_result.errors:
+                print(f" - {error}")
+
+            return
+
+        # Robot Builder
+
+        robot_builder = RobotBuilder()
+
+        context.robot_suite = robot_builder.build(
+            normalized_robot
+        )
+
+        print("[✓] Robot Validation completed")
         print("[✓] Robot Builder completed")
 
+#========================================
         capability_report = CapabilityValidationService().validate(
             context.robot_suite
         )
 
         print(capability_report.summary())
-
-        if not capability_report.can_execute:
-            return
 
 
         if not capability_report.can_execute:
@@ -177,6 +284,33 @@ class AIQEPPipeline:
         print("[✓] Robot Builder")
         print("[✓] Robot Execution")
 
+        execution_time = time.time() - start_time
+
         print("========================================")
         print("Execution completed successfully.")
+        print("----------------------------------------")
+        print(f"Execution Time : {execution_time:.2f} sec")
         print("========================================")
+
+
+
+    def _validate_and_repair(
+        self,
+        artifact_name,
+        artifact,
+        validator,
+        generation_manager,
+        requirement,
+        *validator_args,
+    ):
+        validation_result = validator.validate(*validator_args)
+
+        if validation_result.is_valid:
+            return artifact
+
+        return generation_manager.repair(
+            artifact_name=artifact_name,
+            validation_result=validation_result,
+            current_artifact=artifact,
+            requirement=requirement,
+        )

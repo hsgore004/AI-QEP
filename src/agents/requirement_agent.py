@@ -5,7 +5,7 @@ from llm.models.request import LLMRequest
 from llm.service import LLMService
 
 from models.requirement import Requirement
-from prompts.requirement_prompt import SYSTEM_PROMPT
+from prompts.generation.requirement_prompt import SYSTEM_PROMPT
 
 
 class RequirementAgent:

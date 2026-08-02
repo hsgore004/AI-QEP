@@ -41,3 +41,6 @@ Verify Email Field Is Accessible
 
 Verify Password Field Is Accessible
     No Operation
+
+Click Password Visibility Toggle
+    No Operation

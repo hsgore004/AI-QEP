@@ -22,8 +22,6 @@ class OpenAIProvider(BaseLLMProvider):
         model = request.model or settings.OPENAI_MODEL
 
         try:
-            print("request.model =", request.model)
-            print("type(request.model) =", type(request.model))
             response = self.client.responses.create(
                 model=model,
                 instructions=request.system_prompt,
