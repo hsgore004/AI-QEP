@@ -69,7 +69,7 @@ class AIQEPPipeline:
         print(context.requirement_model.model_dump_json(indent=2))
         print("=============================\n")
 
-        print("[✓] Requirement Agent completed")
+        print("[OK] Requirement Agent completed")
 
         keyword_catalog = KeywordCatalogLoader().load()
 
@@ -106,7 +106,7 @@ class AIQEPPipeline:
             context.ui_test_cases,
         )
 
-        print("[✓] UI Test Case Validation completed")
+        print("[OK] UI Test Case Validation completed")
 
 #===============================================
 
@@ -144,7 +144,7 @@ class AIQEPPipeline:
         print(context.robot_test_cases)
         print("============================\n")
 
-        print("[✓] Generation Layer completed")
+        print("[OK] Generation Layer completed")
 
 
         # Evaluation Layer
@@ -161,7 +161,7 @@ class AIQEPPipeline:
         for result in results:
 
             print(
-                f"[✓] {result.name} completed"
+                f"[OK] {result.name} completed"
             )
 
             print(result.reason)
@@ -207,8 +207,8 @@ class AIQEPPipeline:
             normalized_robot
         )
 
-        print("[✓] Robot Validation completed")
-        print("[✓] Robot Builder completed")
+        print("[OK] Robot Validation completed")
+        print("[OK] Robot Builder completed")
 
 #========================================
         capability_report = CapabilityValidationService().validate(
@@ -267,22 +267,22 @@ class AIQEPPipeline:
             ]
         )
 
-        print("[✓] Robot Execution completed")
+        print("[OK] Robot Execution completed")
 
 
         print("\n========================================")
         print("         AI-QEP EXECUTION SUMMARY")
         print("========================================")
 
-        print("[✓] Requirement Agent")
-        print("[✓] UI Test Case Agent")
+        print("[OK] Requirement Agent")
+        print("[OK] UI Test Case Agent")
         print(
-        f"[✓] {context.deep_eval_result.name:<22}: "
+        f"[OK] {context.deep_eval_result.name:<22}: "
         f"{context.deep_eval_result.score:.2f}")
-        print("[✓] API Test Case Agent")
-        print("[✓] Robot Framework Agent")
-        print("[✓] Robot Builder")
-        print("[✓] Robot Execution")
+        print("[OK] API Test Case Agent")
+        print("[OK] Robot Framework Agent")
+        print("[OK] Robot Builder")
+        print("[OK] Robot Execution")
 
         execution_time = time.time() - start_time
 

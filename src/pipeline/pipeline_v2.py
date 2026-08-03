@@ -24,6 +24,21 @@ from validators.capability_validation_service import (
 )
 
 
+from generators.keyword_generation_manager import (
+    KeywordGenerationManager,
+)
+
+
+from pathlib import Path
+import shutil
+import subprocess
+
+
+from config.settings import EXECUTION_MODE
+from models.execution_mode import ExecutionMode
+
+
+
 class AIQEPPipelineV2:
 
     def run(
@@ -94,7 +109,11 @@ class AIQEPPipelineV2:
 
         context.ui_test_cases = artifacts.ui_test_cases
         context.api_test_cases = artifacts.api_test_cases
-        context.robot_test_cases = artifacts.robot_test_cases
+
+        if settings.GENERATE_ROBOT:
+            context.robot_test_cases = artifacts.robot_test_cases
+        else:
+            context.robot_test_cases = ""
 
         # ==========================================
         # UI Validation
@@ -118,7 +137,7 @@ class AIQEPPipelineV2:
 
             return
 
-        print("[✓] UI Validation completed")
+        print("[OK] UI Validation completed")
 
 #==========================================
 
@@ -141,14 +160,22 @@ class AIQEPPipelineV2:
             if validation_result.is_valid:
                 break
 
-            print(
-                f"[Robot Judge] Attempt {attempt + 1}: FAIL"
-            )
+#==========================================
+
+            print("\n========================================")
+            print(f"ROBOT JUDGE - ATTEMPT {attempt + 1}")
+            print("========================================")
+
+            print("\nCurrent Robot Test Cases:\n")
+            print(context.robot_test_cases)
 
             judge_feedback = "\n".join(
                 validation_result.errors
             )
 
+            print("\nJudge Feedback:\n")
+            print(judge_feedback)
+#==========================================
             context.robot_test_cases = generation_manager.robot_agent.execute(
                 requirement=context.requirement_model,
                 ui_test_cases=context.ui_test_cases,
@@ -156,6 +183,11 @@ class AIQEPPipelineV2:
                 previous_artifact=context.robot_test_cases,
                 judge_feedback=judge_feedback,
             )
+
+            print("\nRegenerated Robot Test Cases:\n")
+            print(context.robot_test_cases)
+            print("========================================\n")
+
 
         else:
 
@@ -168,7 +200,7 @@ class AIQEPPipelineV2:
 
             return
 
-        print("[✓] Robot Validation completed")
+        print("[OK] Robot Validation completed")
 
 #==========================================
 
@@ -187,6 +219,10 @@ class AIQEPPipelineV2:
 
             robot_builder = RobotBuilder()
 
+            print("\n========== NORMALIZED ROBOT TEST CASES ==========\n")
+            print(normalized_robot)
+            print("\n================================================\n")
+
             context.robot_suite = robot_builder.build(
                 normalized_robot,
             )
@@ -198,9 +234,15 @@ class AIQEPPipelineV2:
             if capability_report.can_execute:
                 break
 
-            print(
-                f"[Capability Judge] Attempt {attempt + 1}: FAIL"
-            )
+            print("\n========================================")
+            print(f"CAPABILITY JUDGE - ATTEMPT {attempt + 1}")
+            print("========================================")
+
+            print("\nCurrent Robot Suite:\n")
+            print(context.robot_suite)
+
+            print("\nCapability Report:\n")
+            print(capability_report.summary())
 
             judge_feedback = capability_report.summary()
 
@@ -212,70 +254,77 @@ class AIQEPPipelineV2:
                 judge_feedback=judge_feedback,
             )
 
+            print("\nRegenerated Robot Test Cases:\n")
+            print(context.robot_test_cases)
+            print("========================================\n")
+
+
         else:
 
             print(capability_report.summary())
+
+            print("\nGenerating missing business keywords...\n")
+
+            keyword_manager = KeywordGenerationManager(
+                llm_service,
+            )
+
+            generated_keywords = keyword_manager.generate(
+                context.requirement_model,
+                capability_report.missing_keywords,
+            )
+
+            output_dir = Path("output")
+            output_dir.mkdir(exist_ok=True)
+
+            keyword_file = Path("robot/resources/generated_keywords.resource")
+
+            keyword_file.write_text(
+                generated_keywords,
+                encoding="utf-8",
+            )
+
+            print(generated_keywords)
+
+            print("\nGenerated keyword file:")
+            print(keyword_file)
+
             return
 
-        print("[✓] Capability Validation completed")
-        print("[✓] Robot Builder completed")
+        print("[OK] Capability Validation completed")
+        print("[OK] Robot Builder completed")
 
 
 #==========================================
 
 
         # ==========================================
-        # Robot Execution
+        # Business Execution
         # ==========================================
 
-        from pathlib import Path
-        import shutil
-        import subprocess
+        from executors.suite_executor import SuiteExecutor
 
-        output_dir = Path("output")
-        output_dir.mkdir(exist_ok=True)
-
-        context.robot_output = output_dir / "generated.robot"
-
-        context.robot_output.write_text(
-            context.robot_suite,
-            encoding="utf-8",
+        executor = SuiteExecutor(
+            base_url=settings.INVENTREE_BASE_URL,
         )
 
-        robot_test_file = Path(
-            "robot/tests/generated.robot"
+        executor.execute(
+            context.robot_test_cases
         )
 
-        shutil.copy(
-            context.robot_output,
-            robot_test_file,
-        )
-
-        result = subprocess.run(
-            [
-                ".venv\\Scripts\\robot.exe",
-                "-d",
-                "robot/reports",
-                str(robot_test_file),
-            ]
-        )
-
-        if result.returncode == 0:
-            print("[✓] Robot Execution completed")
-        else:
-            print("[✗] Robot Execution failed")
+        print("[OK] Business Execution completed")
 
 
         print("\n========================================")
         print("         AI-QEP V2 SUMMARY")
         print("========================================")
-        print("[✓] Requirement Agent")
-        print("[✓] UI Generation")
-        print("[✓] UI Validation")
-        print("[✓] API Generation")
-        print("[✓] Robot Generation")
-        print("[✓] Robot Validation")
-        print("[✓] Capability Validation")
-        print("[✓] Robot Builder")
-        print("[✓] Robot Execution")
+        print("[OK] Requirement Agent")
+        print("[OK] UI Generation")
+        print("[OK] UI Validation")
+        print("[OK] API Generation")
+        print("[OK] Robot Generation")
+        print("[OK] Robot Validation")
+        print("[OK] Capability Validation")
+        print("[OK] Robot Builder")
+        print("[OK] Robot Execution")
         print("========================================")

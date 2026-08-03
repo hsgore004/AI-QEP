@@ -15,14 +15,16 @@ class ToolSelectionAgent:
     def select_tool(
         self,
         business_step: str,
-        available_tools: list[str],
         current_url: str,
+        available_tools: str,
+        page_snapshot: str,
     ):
 
         prompt = self._build_prompt(
             business_step,
-            available_tools,
             current_url,
+            available_tools,
+            page_snapshot,
         )
 
         request = LLMRequest(
@@ -34,11 +36,14 @@ class ToolSelectionAgent:
             request,
         )
 
+
         response = response.content
 
-        print("\n========== TOOL SELECTION ==========")
-        print(response)
-        print("====================================\n")
+        response = response.replace("```json", "")
+        response = response.replace("```", "")
+        response = response.strip()
+
+        print("[LLM] Tool selected")
 
         return response
 
@@ -46,20 +51,23 @@ class ToolSelectionAgent:
     def _build_prompt(
         self,
         business_step: str,
-        available_tools: list[str],
         current_url: str,
+        available_tools: str,
+        page_snapshot: str,
     ) -> str:
 
         return f"""
-{SYSTEM_PROMPT}
-
-Business Step:
+You MUST return valid JSON.
+Business Goal:
 {business_step}
 
 Current URL:
 {current_url}
 
 Available MCP Tools:
+{available_tools}
 
-{chr(10).join(available_tools)}
+Current Page Snapshot:
+
+{page_snapshot}
 """

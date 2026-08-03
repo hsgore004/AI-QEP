@@ -12,8 +12,17 @@ class RobotValidator(BaseValidator):
 
 
     FORBIDDEN_PATTERNS = [
-        "${",
+        "markdown",
+        "plaintext",
+        "```",
+        "|",
         "#",
+        "${",
+        "HTML",
+        "XML",
+        "JSON",
+        "YAML",
+        "CSV",
         "Should Be ",
         "Input Text",
         "Click Element",
@@ -38,10 +47,12 @@ class RobotValidator(BaseValidator):
             result,
         )
 
+        self._validate_robot_structure(
+            content,
+            result,
+        )
 
-
-
-        self._validate_business_keywords_only(
+        self._validate_forbidden_syntax(
             content,
             result,
         )
@@ -70,8 +81,59 @@ class RobotValidator(BaseValidator):
             )
 
 
+    def _validate_robot_structure(
+        self,
+        content: str,
+        result: ValidationResult,
+    ) -> None:
 
-    def _validate_business_keywords_only(
+        lines = content.splitlines()
+
+        # First non-empty line
+        first = None
+
+        for line in lines:
+            if line.strip():
+                first = line.strip()
+                break
+
+        if first != "*** Test Cases ***":
+            result.add_issue(
+                code="RV003",
+                message="Robot output must start with *** Test Cases ***.",
+                artifact=first or "",
+                suggestion="Return only Robot Framework Test Cases.",
+            )
+
+        for line in lines:
+
+            stripped = line.strip()
+
+            if not stripped:
+                continue
+
+            if stripped.startswith("***"):
+                continue
+
+            # Executable keyword
+            if line.startswith("    "):
+                continue
+
+            # Test case name
+            if not line.startswith(" "):
+                continue
+
+            result.add_issue(
+                code="RV004",
+                message="Invalid Robot Framework structure.",
+                artifact=line,
+                suggestion="Test case names must not be indented. Keywords must use exactly four spaces.",
+            )
+
+
+
+
+    def _validate_forbidden_syntax(
         self,
         content: str,
         result: ValidationResult,
@@ -109,7 +171,7 @@ class RobotValidator(BaseValidator):
 
                     result.add_issue(
                         code="RV002",
-                        message="Implementation detail detected.",
+                        message=f"Forbidden Robot syntax detected: {pattern}",
                         artifact=stripped,
                         suggestion="Replace implementation details with high-level business keywords.",
                     )

@@ -15,18 +15,27 @@ class OpenAIProvider(BaseLLMProvider):
     def __init__(self, client: OpenAI):
         self.client = client
 
+
     def generate(self, request: LLMRequest) -> LLMResponse:
 
-        # Use the model from the request if provided,
-        # otherwise fall back to the configured default.
         model = request.model or settings.OPENAI_MODEL
 
         try:
+
+            print("[LLM] Thinking...")
+
             response = self.client.responses.create(
                 model=model,
                 instructions=request.system_prompt,
                 input=request.user_prompt,
+                text={
+                    "format": {
+                        "type": "json_object"
+                    }
+                },
             )
+
+            print("[LLM] OK Response received")
 
             return LLMResponse(
                 content=response.output_text,
@@ -35,6 +44,12 @@ class OpenAIProvider(BaseLLMProvider):
             )
 
         except Exception as ex:
+
+            print("\n========== OPENAI ERROR ==========")
+            print(type(ex).__name__)
+            print(ex)
+            print("==================================\n")
+
             return LLMResponse(
                 content="",
                 model=model,

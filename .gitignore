@@ -1,10 +1,13 @@
 # Virtual Environment
 .venv/
+.venv312/
 
 # Python
 __pycache__/
 *.pyc
-
+__pycache__/
+*.pyc
+output.txt
 # Environment Variables
 .env
 
@@ -28,3 +31,4 @@ build/
 
 # Robot Framework Reports
 robot/reports/
+.playwright-mcp/
