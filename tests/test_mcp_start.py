@@ -18,6 +18,8 @@ from agents.verification_agent import VerificationAgent
 from executors.business_executor import BusinessExecutor
 from executors.scenario_executor import ScenarioExecutor
 
+from loaders.documentation_loader import DocumentationLoader
+from qabrain.qa_brain import QABrain
 
 async def main():
 
@@ -32,6 +34,18 @@ async def main():
     llm_service = LLMService(
         provider,
     )
+
+
+    # ---------------------------------------------
+    # QA Brain
+    # ---------------------------------------------
+
+    documentation_loader = DocumentationLoader()
+
+    qa_brain = QABrain(
+        llm_service,
+    )
+
 
     # ---------------------------------------------
     # Agents
@@ -69,6 +83,20 @@ async def main():
         business_planner,
     )
 
+
+    # ---------------------------------------------
+    # Learn Application
+    # ---------------------------------------------
+
+    documentation = documentation_loader.load(
+        "https://docs.inventree.org/en/stable/part/"
+    )
+
+    brain_output = qa_brain.learn(
+        documentation,
+    )
+
+
     async with business_executor.client:
 
         await business_executor.client.call_tool(
@@ -80,9 +108,27 @@ async def main():
             "Open Login Page",
         )
 
+        # ---------------------------------------------
+        # Bootstrap
+        # ---------------------------------------------
+
         await scenario_executor.execute(
             "Login as admin",
         )
+
+        # ---------------------------------------------
+        # Execute QA Brain Scenarios
+        # ---------------------------------------------
+
+        for scenario in brain_output["scenarios"].data["scenarios"]:
+
+            print("\n" + "=" * 80)
+            print(f"Executing Scenario: {scenario['title']}")
+            print("=" * 80)
+
+            await scenario_executor.execute(
+                scenario,
+            )
 
 
 if __name__ == "__main__":

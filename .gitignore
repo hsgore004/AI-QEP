@@ -32,3 +32,8 @@ build/
 # Robot Framework Reports
 robot/reports/
 .playwright-mcp/
+
+
+robot/tests/generated.robot
+robot/resources/generated_keywords.resource
+.artifacts

@@ -16,8 +16,22 @@ class ScenarioExecutor:
 
     async def execute(
         self,
-        business_goal: str,
+        scenario,
     ):
+
+        # --------------------------------------------------
+        # Support both:
+        # 1. Plain string
+        # 2. QA Brain scenario object
+        # --------------------------------------------------
+
+        if isinstance(scenario, str):
+
+            business_goal = scenario
+
+        else:
+
+            business_goal = scenario["title"]
 
         print("\n" + "=" * 70)
         print("BUSINESS GOAL")
@@ -44,7 +58,9 @@ class ScenarioExecutor:
             print("-" * 70)
             print(step)
 
-            await self.business_executor.execute(step)
+            await self.business_executor.execute(
+                step,
+            )
 
         print("\n" + "=" * 70)
         print("[OK] BUSINESS SCENARIO COMPLETED")
