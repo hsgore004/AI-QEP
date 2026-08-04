@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Literal
 
 from pydantic import BaseModel, Field
 
@@ -25,4 +25,5 @@ class LLMRequest(BaseModel):
 
     attachments: list[str] = Field(default_factory=list)
 
-    
+    # NEW
+    response_format: Literal["text", "json"] = "text"

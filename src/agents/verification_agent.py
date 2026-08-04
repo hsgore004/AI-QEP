@@ -14,7 +14,7 @@ class VerificationAgent:
     ):
         self.llm_service = llm_service
 
-    def verify(
+    async def verify(
         self,
         business_step: str,
         page_snapshot: str,
@@ -33,9 +33,10 @@ Current Page Snapshot:
 
 Return ONLY valid JSON.
 """,
+    response_format="json",
         )
 
-        response = self.llm_service.generate(
+        response = await self.llm_service.generate(
             request,
         )
 

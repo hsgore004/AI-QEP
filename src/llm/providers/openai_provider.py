@@ -24,15 +24,21 @@ class OpenAIProvider(BaseLLMProvider):
 
             print("[LLM] Thinking...")
 
+            kwargs = {}
+
+            # Only JSON agents should request JSON mode
+            if request.response_format == "json":
+                kwargs["text"] = {
+                    "format": {
+                        "type": "json_object"
+                    }
+                }
+
             response = self.client.responses.create(
                 model=model,
                 instructions=request.system_prompt,
                 input=request.user_prompt,
-                text={
-                    "format": {
-                        "type": "json_object"
-                    }
-                },
+                **kwargs,
             )
 
             print("[LLM] OK Response received")

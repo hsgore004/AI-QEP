@@ -1,3 +1,5 @@
+from urllib import response
+
 from llm.models.request import LLMRequest
 from llm.service import LLMService
 
@@ -12,12 +14,16 @@ class ToolSelectionAgent:
     ):
         self.llm_service = llm_service
 
-    def select_tool(
+    async def select_tool(
         self,
         business_step: str,
         current_url: str,
         available_tools: str,
         page_snapshot: str,
+        previous_step: str | None = None,
+        next_step: str | None = None,
+        expected_result: str | None = None,
+        last_action: str | None = None,
     ):
 
         prompt = self._build_prompt(
@@ -25,14 +31,15 @@ class ToolSelectionAgent:
             current_url,
             available_tools,
             page_snapshot,
+            last_action,
         )
-
         request = LLMRequest(
             system_prompt=SYSTEM_PROMPT,
             user_prompt=prompt,
+            response_format="json",
         )
 
-        response = self.llm_service.generate(
+        response = await self.llm_service.generate(
             request,
         )
 
@@ -43,8 +50,6 @@ class ToolSelectionAgent:
         response = response.replace("```", "")
         response = response.strip()
 
-        print("[LLM] Tool selected")
-
         return response
 
 
@@ -54,20 +59,70 @@ class ToolSelectionAgent:
         current_url: str,
         available_tools: str,
         page_snapshot: str,
+        previous_step: str | None = None,
+        next_step: str | None = None,
+        expected_result: str | None = None,
+        last_action: str | None = None,
     ) -> str:
 
         return f"""
-You MUST return valid JSON.
-Business Goal:
+Do not wrap the JSON in markdown.
+
+Current Business Step
+
+BUSINESS GOAL
+
+Current Step
+-------------
 {business_step}
 
-Current URL:
+Previous Step
+-------------
+{previous_step}
+
+Next Step
+---------
+{next_step}
+
+Expected Result
+---------------
+{expected_result}
+
+Current URL
+-----------
 {current_url}
 
-Available MCP Tools:
+Available MCP Tools
+-------------------
 {available_tools}
 
-Current Page Snapshot:
-
+Current Page Snapshot
+---------------------
 {page_snapshot}
+
+
+Return ONLY valid JSON.
+
+The response MUST match this schema exactly:
+
+{{
+  "tool": "browser_click",
+  "arguments": {{
+    "target": "e42"
+  }}
+}}
+
+or
+
+{{
+  "tool": "browser_fill_form",
+  "arguments": {{}}
+}}
+
+or
+
+{{
+  "tool": "FINISHED",
+  "arguments": {{}}
+}}
 """

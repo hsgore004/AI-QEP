@@ -18,9 +18,6 @@ from agents.verification_agent import VerificationAgent
 from executors.business_executor import BusinessExecutor
 from executors.scenario_executor import ScenarioExecutor
 
-from loaders.documentation_loader import DocumentationLoader
-from qabrain.qa_brain import QABrain
-
 async def main():
 
     client = OpenAI(
@@ -39,13 +36,6 @@ async def main():
     # ---------------------------------------------
     # QA Brain
     # ---------------------------------------------
-
-    documentation_loader = DocumentationLoader()
-
-    qa_brain = QABrain(
-        llm_service,
-    )
-
 
     # ---------------------------------------------
     # Agents
@@ -72,6 +62,7 @@ async def main():
         INVENTREE_BASE_URL,
         tool_selection_agent,
         verification_agent,
+        llm_service,
     )
 
     # ---------------------------------------------
@@ -88,16 +79,11 @@ async def main():
     # Learn Application
     # ---------------------------------------------
 
-    documentation = documentation_loader.load(
-        "https://docs.inventree.org/en/stable/part/"
-    )
-
-    brain_output = qa_brain.learn(
-        documentation,
-    )
-
-
     async with business_executor.client:
+
+        business_executor.tool_catalog = (
+            await business_executor.client.get_tool_catalog()
+        )
 
         await business_executor.client.call_tool(
             "browser_close",
@@ -108,27 +94,72 @@ async def main():
             "Open Login Page",
         )
 
-        # ---------------------------------------------
-        # Bootstrap
-        # ---------------------------------------------
+        snapshot = await business_executor.client.call_tool(
+            "browser_snapshot",
+            {},
+        )
+
+        print(snapshot)
 
         await scenario_executor.execute(
             "Login as admin",
         )
 
-        # ---------------------------------------------
-        # Execute QA Brain Scenarios
-        # ---------------------------------------------
 
-        for scenario in brain_output["scenarios"].data["scenarios"]:
+        import asyncio
 
-            print("\n" + "=" * 80)
-            print(f"Executing Scenario: {scenario['title']}")
-            print("=" * 80)
+        print("\nSleeping for 7 seconds...\n")
 
-            await scenario_executor.execute(
-                scenario,
+        await asyncio.sleep(7)
+
+        print("\nSleep finished.\n")
+
+        for i in range(5):
+            print(f"Heartbeat {i}")
+
+            result = await business_executor.client.call_tool(
+                "browser_snapshot",
+                {},
             )
+
+            print(result)
+
+            await asyncio.sleep(3)
+
+
+        print("\n========== TAKING SNAPSHOT AGAIN ==========\n")
+
+        snapshot = await business_executor.client.call_tool(
+            "browser_snapshot",
+            {},
+        )
+
+        print(snapshot)
+
+
+        print("========== BEFORE SCENARIO ==========")
+        print("session =", business_executor.client.session)
+        print("dispatcher =", business_executor.client.session._dispatcher)
+
+        await scenario_executor.execute(
+            {
+                "title": "Create a new Part"
+            }
+        )
+
+        print("\nWaiting 30 seconds WITHOUT calling OpenAI...\n")
+
+        await asyncio.sleep(30)
+
+        print("\n30 seconds completed.\n")
+
+        snapshot = await business_executor.client.call_tool(
+            "browser_snapshot",
+            {},
+        )
+
+        print(snapshot)
+        
 
 
 if __name__ == "__main__":

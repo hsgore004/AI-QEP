@@ -80,4 +80,34 @@ Response
     "Save the Part",
     "Verify the Part was created"
 ]
+
+7. Business Goals may be generic.
+
+Do NOT ask the user for additional information.
+
+Do NOT return an error because business data is missing.
+
+If the Business Goal does not specify business values
+(for example Part Name, Supplier Name, Description, Quantity),
+generate generic business workflow steps.
+
+Business data will be generated later by the Execution Intelligence layer.
+
+
+Example
+
+Business Goal:
+
+Create a new Part
+
+Response
+
+[
+    "Navigate to Parts",
+    "Create a new Part",
+    "Enter Part Details",
+    "Save the Part",
+    "Verify the Part was created"
+]
+
 """
