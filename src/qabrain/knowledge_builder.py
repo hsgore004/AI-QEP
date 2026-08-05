@@ -1,116 +1,330 @@
 import json
+from pathlib import Path
 
 from llm.models.request import LLMRequest
-from qabrain.brain_stage import BrainStage
 
 
 SYSTEM_PROMPT = """
-You are an expert Technical Documentation Analyst.
+You are a Senior Technical Documentation Analyst.
 
-Your responsibility is to convert application documentation into structured business knowledge.
+Your ONLY responsibility is to extract structured knowledge from application documentation.
 
-Extract ONLY facts that are explicitly stated or directly supported by the documentation.
+The supplied documentation is the ONLY source of truth.
 
-Do NOT infer.
-Do NOT summarize.
-Do NOT invent.
-Do NOT classify beyond what is documented.
+Never use prior knowledge.
 
-This stage builds the Knowledge Base for later reasoning.
+Never infer.
 
-Do NOT generate:
+Never summarize.
 
-- Features
-- Capabilities
-- Test scenarios
-- Test cases
-- Browser actions
-- Automation
-- Recommendations
-- Assumptions
+Never invent.
+
+Never classify beyond what is explicitly stated.
+
+--------------------------------------------------
+OBJECTIVE
+--------------------------------------------------
+
+Extract every documentation chunk into structured knowledge.
+
+The goal is to preserve ALL business information for later reasoning.
+
+This stage performs ZERO reasoning.
+
+This stage performs ZERO feature discovery.
+
+This stage performs ZERO capability discovery.
+
+This stage performs ZERO entity discovery.
+
+--------------------------------------------------
+EXTRACTION RULES
+--------------------------------------------------
+
+For every documentation chunk extract:
+
+- facts
+- definitions
+- business_rules
+- constraints
+- relationships
+- events
+- examples
+- warnings
+- terminology
+
+If a section does not exist,
+
+return an empty array.
+
+Never fabricate information.
+
+Never rewrite the documentation.
+
+The original text MUST remain unchanged.
+
+--------------------------------------------------
+OUTPUT
+--------------------------------------------------
 
 Return ONLY valid JSON.
 
-Format
-
 {
-    "application": "",
-    "module": "",
-    "purpose": "",
+    "application": {
+        "name": ""
+    },
 
-    "business_objects": [],
+    "pages": [
 
-    "user_roles": [],
+        {
 
-    "business_rules": [],
+            "title": "",
 
-    "relationships": [],
+            "url": "",
 
-    "constraints": [],
+            "chunks": [
 
-    "events": [],
+                {
 
-    "terminology": {},
+                    "chunk_id": "",
 
-    "raw_summary": ""
+                    "heading": "",
+
+                    "heading_level": 0,
+
+                    "original_text": "",
+
+                    "facts": [],
+
+                    "definitions": [],
+
+                    "business_rules": [],
+
+                    "constraints": [],
+
+                    "relationships": [],
+
+                    "events": [],
+
+                    "examples": [],
+
+                    "warnings": [],
+
+                    "terminology": []
+
+                }
+
+            ]
+
+        }
+
+    ]
 }
 """
 
 
-class KnowledgeBuilder(BrainStage):
+class KnowledgeBuilder:
 
-    def stage_name(self):
+    # --------------------------------------------------
 
-        return "Knowledge"
-
-    def execute(
+    def __init__(
         self,
-        documentation: str,
+        llm_service,
     ):
 
-        request = LLMRequest(
-            system_prompt=SYSTEM_PROMPT,
-            user_prompt=f"""
-Application Documentation
+        self.llm_service = llm_service
 
-{documentation}
+    # --------------------------------------------------
 
-Return ONLY valid JSON.
-""",
+    async def run(
+        self,
+        documentation_file,
+        output_dir,
+    ) -> bool:
+
+        documentation_file = Path(
+            documentation_file,
         )
 
-        response = self.llm_service.generate(
+        output_dir = Path(
+            output_dir,
+        )
+
+        print()
+        print("=" * 80)
+        print("KNOWLEDGE EXTRACTOR")
+        print("=" * 80)
+
+        print(
+            f"Reading : {documentation_file}"
+        )
+
+        documentation = self._read_json(
+            documentation_file,
+        )
+
+        prompt = self._build_prompt(
+            documentation,
+        )
+
+        request = LLMRequest(
+
+            system_prompt=SYSTEM_PROMPT,
+
+            user_prompt=prompt,
+
+            response_format="json",
+
+        )
+
+        response = await self.llm_service.generate(
             request,
         )
 
-        return json.loads(
+        knowledge = json.loads(
             response.content,
         )
 
-    # --------------------------------------------------
-    # Quality Gate
+        self._validate(
+            knowledge,
+        )
+
+        output_file = (
+            output_dir
+            / "knowledge.json"
+        )
+
+        self._write_json(
+            output_file,
+            knowledge,
+        )
+
+        print()
+
+        print(
+            f"Pages : {len(knowledge.get('pages', []))}"
+        )
+
+        print(
+            f"Saved : {output_file}"
+        )
+
+        return True
+
     # --------------------------------------------------
 
-    def validate(
+    def _build_prompt(
         self,
-        output,
-    ) -> float:
+        documentation,
+    ):
 
-        score = 0.0
+        pages = documentation.get(
+            "pages",
+            [],
+        )
 
-        if output.get("application"):
-            score += 0.2
+        document = []
 
-        if output.get("purpose"):
-            score += 0.2
+        for page in pages:
 
-        if output.get("features"):
-            score += 0.2
+            document.append("=" * 80)
 
-        if output.get("entities"):
-            score += 0.2
+            document.append(
+                f"PAGE TITLE : {page.get('title','')}"
+            )
 
-        if output.get("workflows"):
-            score += 0.2
+            document.append(
+                f"URL : {page.get('url','')}"
+            )
 
-        return score
+            document.append("")
+
+            for chunk in page.get(
+                "chunks",
+                [],
+            ):
+
+                document.append(
+                    "-" * 80
+                )
+
+                document.append(
+                    f"Chunk ID : {chunk.get('id','')}"
+                )
+
+                document.append(
+                    f"Heading : {chunk.get('heading','')}"
+                )
+
+                document.append(
+                    f"Heading Level : {chunk.get('heading_level',0)}"
+                )
+
+                document.append("")
+
+                document.append(
+                    chunk.get(
+                        "text",
+                        "",
+                    )
+                )
+
+                document.append("")
+
+        return f"""
+Application Documentation
+
+{chr(10).join(document)}
+
+Return ONLY valid JSON.
+"""
+
+    # --------------------------------------------------
+
+    def _validate(
+        self,
+        knowledge,
+    ):
+
+        if "pages" not in knowledge:
+
+            raise RuntimeError(
+                "Knowledge extraction failed. Missing 'pages'."
+            )
+
+        return True
+
+    # --------------------------------------------------
+
+    def _read_json(
+        self,
+        file,
+    ):
+
+        return json.loads(
+
+            Path(file).read_text(
+                encoding="utf-8",
+            )
+
+        )
+
+    # --------------------------------------------------
+
+    def _write_json(
+        self,
+        file,
+        data,
+    ):
+
+        Path(file).write_text(
+
+            json.dumps(
+                data,
+                indent=2,
+                ensure_ascii=False,
+            ),
+
+            encoding="utf-8",
+
+        )

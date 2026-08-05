@@ -1,0 +1,62 @@
+{
+  "url": "https://docs.inventree.org/en/stable/part/create/",
+  "title": "Creating a Part - InvenTree Documentation",
+  "depth": 1,
+  "parent_url": "https://docs.inventree.org/en/stable/part/",
+  "child_links": [
+    "https://docs.inventree.org/en/stable/part/create/",
+    "https://docs.inventree.org/en/stable/part/",
+    "https://docs.inventree.org/en/stable/part/virtual/",
+    "https://docs.inventree.org/en/stable/part/views/",
+    "https://docs.inventree.org/en/stable/part/trackable/",
+    "https://docs.inventree.org/en/stable/part/revision/",
+    "https://docs.inventree.org/en/stable/part/template/",
+    "https://docs.inventree.org/en/stable/part/test/",
+    "https://docs.inventree.org/en/stable/part/pricing/",
+    "https://docs.inventree.org/en/stable/part/stocktake/",
+    "https://docs.inventree.org/en/stable/part/notification/"
+  ],
+  "markdown_path": "markdown/en/stable/part/create/index.md",
+  "html_path": "html/en/stable/part/create/index.html",
+  "metadata_path": "metadata/en/stable/part/create/index.json",
+  "images": [
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/logo.png",
+      "local_path": "images/en/stable/part/create/index/89fe0f1555-logo.png"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/images/part/new_parts_dropdown.png",
+      "local_path": "images/en/stable/part/create/index/8591525bea-new_parts_dropdown.png"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/images/part/part_create_form.png",
+      "local_path": "images/en/stable/part/create/index/dd76fb068d-part_create_form.png"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/images/part/part_initial_stock.png",
+      "local_path": "images/en/stable/part/create/index/b585b24be0-part_initial_stock.png"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/images/part/part_create_supplier.png",
+      "local_path": "images/en/stable/part/create/index/2e1113579d-part_create_supplier.png"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/images/part/part_new_suppliers.png",
+      "local_path": "images/en/stable/part/create/index/942d0b1070-part_new_suppliers.png"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/images/part/import_part.png",
+      "local_path": "images/en/stable/part/create/index/66ac863a75-import_part.png"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/images/part/import_part_wizard.png",
+      "local_path": "images/en/stable/part/create/index/22f9ea920f-import_part_wizard.png"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/images/part/import_supplier_part.png",
+      "local_path": "images/en/stable/part/create/index/24c2fbdd1a-import_supplier_part.png"
+    }
+  ],
+  "attachments": [],
+  "asset_download_failures": []
+}

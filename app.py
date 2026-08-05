@@ -1,38 +1,20 @@
-from pathlib import Path
-import sys
+import asyncio
 
-sys.path.append(str(Path(__file__).parent / "src"))
-
-from pipeline.pipeline_v2 import AIQEPPipelineV2
+from config import settings
+from pipeline.pipeline_v3 import AIQEPPipelineV3
 
 
-def main():
+async def main():
 
-    requirement_file = (
-        sys.argv[1]
-        if len(sys.argv) > 1
-        else "requirements/login_requirement.md"
+    pipeline = AIQEPPipelineV3()
+
+    await pipeline.run(
+        documentation_url=settings.DOCUMENTATION_URL,
     )
-
-    print("\n========================================")
-    print("               AI-QEP")
-    print("========================================")
-    print(f"Requirement File : {requirement_file}")
-    print("========================================\n")
-
-    pipeline = AIQEPPipelineV2()
-
-    try:
-        pipeline.run(requirement_file)
-
-    except FileNotFoundError as ex:
-
-        print("\n========================================")
-        print("ERROR")
-        print("========================================")
-        print(ex)
-        print("========================================")
 
 
 if __name__ == "__main__":
-    main()
+
+    asyncio.run(
+        main(),
+    )

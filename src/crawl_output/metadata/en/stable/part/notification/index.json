@@ -1,0 +1,54 @@
+{
+  "url": "https://docs.inventree.org/en/stable/part/notification/",
+  "title": "Part Notifications - InvenTree Documentation",
+  "depth": 1,
+  "parent_url": "https://docs.inventree.org/en/stable/part/",
+  "child_links": [
+    "https://docs.inventree.org/en/stable/part/notification/",
+    "https://docs.inventree.org/en/stable/part/",
+    "https://docs.inventree.org/en/stable/part/create/",
+    "https://docs.inventree.org/en/stable/part/virtual/",
+    "https://docs.inventree.org/en/stable/part/views/",
+    "https://docs.inventree.org/en/stable/part/trackable/",
+    "https://docs.inventree.org/en/stable/part/revision/",
+    "https://docs.inventree.org/en/stable/part/template/",
+    "https://docs.inventree.org/en/stable/part/test/",
+    "https://docs.inventree.org/en/stable/part/pricing/",
+    "https://docs.inventree.org/en/stable/part/stocktake/"
+  ],
+  "markdown_path": "markdown/en/stable/part/notification/index.md",
+  "html_path": "html/en/stable/part/notification/index.html",
+  "metadata_path": "metadata/en/stable/part/notification/index.json",
+  "images": [
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/logo.png",
+      "local_path": "images/en/stable/part/notification/index/89fe0f1555-logo.png"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/images/part/notification_header.png",
+      "local_path": "images/en/stable/part/notification/index/5f3ae1333a-notification_header.png"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/images/part/notification_flyout.png",
+      "local_path": "images/en/stable/part/notification/index/03e6744971-notification_flyout.png"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/images/part/notification_inbox.png",
+      "local_path": "images/en/stable/part/notification/index/c6f55ca9a0-notification_inbox.png"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/images/part/notification_history.png",
+      "local_path": "images/en/stable/part/notification/index/50893f9102-notification_history.png"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/images/part/part_subscribe_on.png",
+      "local_path": "images/en/stable/part/notification/index/ed9bbf702d-part_subscribe_on.png"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/images/part/part_subscribe_off.png",
+      "local_path": "images/en/stable/part/notification/index/87823714c7-part_subscribe_off.png"
+    }
+  ],
+  "attachments": [],
+  "asset_download_failures": []
+}

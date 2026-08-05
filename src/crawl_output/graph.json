@@ -1,0 +1,558 @@
+{
+  "root_url": "https://docs.inventree.org/en/stable/part/",
+  "generated_at": "2026-08-04T20:25:58.942633+00:00",
+  "nodes": [
+    {
+      "url": "https://docs.inventree.org/en/stable/part/",
+      "title": "Parts - InvenTree Documentation",
+      "depth": 0,
+      "parent_url": "https://docs.inventree.org/en/stable/part/"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/part/create/",
+      "title": "Creating a Part - InvenTree Documentation",
+      "depth": 1,
+      "parent_url": "https://docs.inventree.org/en/stable/part/"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/part/notification/",
+      "title": "Part Notifications - InvenTree Documentation",
+      "depth": 1,
+      "parent_url": "https://docs.inventree.org/en/stable/part/"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/part/pricing/",
+      "title": "Pricing - InvenTree Documentation",
+      "depth": 1,
+      "parent_url": "https://docs.inventree.org/en/stable/part/"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/part/revision/",
+      "title": "Part Revisions - InvenTree Documentation",
+      "depth": 1,
+      "parent_url": "https://docs.inventree.org/en/stable/part/"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/part/stocktake/",
+      "title": "Part Stocktake - InvenTree Documentation",
+      "depth": 1,
+      "parent_url": "https://docs.inventree.org/en/stable/part/"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/part/template/",
+      "title": "Part Templates - InvenTree Documentation",
+      "depth": 1,
+      "parent_url": "https://docs.inventree.org/en/stable/part/"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/part/test/",
+      "title": "Part Test Templates - InvenTree Documentation",
+      "depth": 1,
+      "parent_url": "https://docs.inventree.org/en/stable/part/"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/part/trackable/",
+      "title": "Trackable Parts - InvenTree Documentation",
+      "depth": 1,
+      "parent_url": "https://docs.inventree.org/en/stable/part/"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/part/views/",
+      "title": "Part Views - InvenTree Documentation",
+      "depth": 1,
+      "parent_url": "https://docs.inventree.org/en/stable/part/"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/part/virtual/",
+      "title": "Virtual Parts - InvenTree Documentation",
+      "depth": 1,
+      "parent_url": "https://docs.inventree.org/en/stable/part/"
+    }
+  ],
+  "edges": [
+    {
+      "source": "https://docs.inventree.org/en/stable/part/",
+      "target": "https://docs.inventree.org/en/stable/part/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/",
+      "target": "https://docs.inventree.org/en/stable/part/create/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/",
+      "target": "https://docs.inventree.org/en/stable/part/notification/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/",
+      "target": "https://docs.inventree.org/en/stable/part/pricing/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/",
+      "target": "https://docs.inventree.org/en/stable/part/revision/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/",
+      "target": "https://docs.inventree.org/en/stable/part/stocktake/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/",
+      "target": "https://docs.inventree.org/en/stable/part/template/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/",
+      "target": "https://docs.inventree.org/en/stable/part/test/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/",
+      "target": "https://docs.inventree.org/en/stable/part/trackable/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/",
+      "target": "https://docs.inventree.org/en/stable/part/views/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/",
+      "target": "https://docs.inventree.org/en/stable/part/virtual/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/create/",
+      "target": "https://docs.inventree.org/en/stable/part/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/create/",
+      "target": "https://docs.inventree.org/en/stable/part/create/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/create/",
+      "target": "https://docs.inventree.org/en/stable/part/notification/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/create/",
+      "target": "https://docs.inventree.org/en/stable/part/pricing/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/create/",
+      "target": "https://docs.inventree.org/en/stable/part/revision/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/create/",
+      "target": "https://docs.inventree.org/en/stable/part/stocktake/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/create/",
+      "target": "https://docs.inventree.org/en/stable/part/template/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/create/",
+      "target": "https://docs.inventree.org/en/stable/part/test/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/create/",
+      "target": "https://docs.inventree.org/en/stable/part/trackable/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/create/",
+      "target": "https://docs.inventree.org/en/stable/part/views/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/create/",
+      "target": "https://docs.inventree.org/en/stable/part/virtual/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/notification/",
+      "target": "https://docs.inventree.org/en/stable/part/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/notification/",
+      "target": "https://docs.inventree.org/en/stable/part/create/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/notification/",
+      "target": "https://docs.inventree.org/en/stable/part/notification/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/notification/",
+      "target": "https://docs.inventree.org/en/stable/part/pricing/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/notification/",
+      "target": "https://docs.inventree.org/en/stable/part/revision/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/notification/",
+      "target": "https://docs.inventree.org/en/stable/part/stocktake/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/notification/",
+      "target": "https://docs.inventree.org/en/stable/part/template/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/notification/",
+      "target": "https://docs.inventree.org/en/stable/part/test/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/notification/",
+      "target": "https://docs.inventree.org/en/stable/part/trackable/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/notification/",
+      "target": "https://docs.inventree.org/en/stable/part/views/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/notification/",
+      "target": "https://docs.inventree.org/en/stable/part/virtual/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/pricing/",
+      "target": "https://docs.inventree.org/en/stable/part/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/pricing/",
+      "target": "https://docs.inventree.org/en/stable/part/create/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/pricing/",
+      "target": "https://docs.inventree.org/en/stable/part/notification/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/pricing/",
+      "target": "https://docs.inventree.org/en/stable/part/pricing/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/pricing/",
+      "target": "https://docs.inventree.org/en/stable/part/revision/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/pricing/",
+      "target": "https://docs.inventree.org/en/stable/part/stocktake/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/pricing/",
+      "target": "https://docs.inventree.org/en/stable/part/template/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/pricing/",
+      "target": "https://docs.inventree.org/en/stable/part/test/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/pricing/",
+      "target": "https://docs.inventree.org/en/stable/part/trackable/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/pricing/",
+      "target": "https://docs.inventree.org/en/stable/part/views/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/pricing/",
+      "target": "https://docs.inventree.org/en/stable/part/virtual/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/revision/",
+      "target": "https://docs.inventree.org/en/stable/part/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/revision/",
+      "target": "https://docs.inventree.org/en/stable/part/create/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/revision/",
+      "target": "https://docs.inventree.org/en/stable/part/notification/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/revision/",
+      "target": "https://docs.inventree.org/en/stable/part/pricing/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/revision/",
+      "target": "https://docs.inventree.org/en/stable/part/revision/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/revision/",
+      "target": "https://docs.inventree.org/en/stable/part/stocktake/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/revision/",
+      "target": "https://docs.inventree.org/en/stable/part/template/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/revision/",
+      "target": "https://docs.inventree.org/en/stable/part/test/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/revision/",
+      "target": "https://docs.inventree.org/en/stable/part/trackable/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/revision/",
+      "target": "https://docs.inventree.org/en/stable/part/views/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/revision/",
+      "target": "https://docs.inventree.org/en/stable/part/virtual/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/stocktake/",
+      "target": "https://docs.inventree.org/en/stable/part/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/stocktake/",
+      "target": "https://docs.inventree.org/en/stable/part/create/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/stocktake/",
+      "target": "https://docs.inventree.org/en/stable/part/notification/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/stocktake/",
+      "target": "https://docs.inventree.org/en/stable/part/pricing/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/stocktake/",
+      "target": "https://docs.inventree.org/en/stable/part/revision/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/stocktake/",
+      "target": "https://docs.inventree.org/en/stable/part/stocktake/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/stocktake/",
+      "target": "https://docs.inventree.org/en/stable/part/template/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/stocktake/",
+      "target": "https://docs.inventree.org/en/stable/part/test/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/stocktake/",
+      "target": "https://docs.inventree.org/en/stable/part/trackable/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/stocktake/",
+      "target": "https://docs.inventree.org/en/stable/part/views/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/stocktake/",
+      "target": "https://docs.inventree.org/en/stable/part/virtual/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/template/",
+      "target": "https://docs.inventree.org/en/stable/part/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/template/",
+      "target": "https://docs.inventree.org/en/stable/part/create/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/template/",
+      "target": "https://docs.inventree.org/en/stable/part/notification/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/template/",
+      "target": "https://docs.inventree.org/en/stable/part/pricing/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/template/",
+      "target": "https://docs.inventree.org/en/stable/part/revision/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/template/",
+      "target": "https://docs.inventree.org/en/stable/part/stocktake/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/template/",
+      "target": "https://docs.inventree.org/en/stable/part/template/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/template/",
+      "target": "https://docs.inventree.org/en/stable/part/test/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/template/",
+      "target": "https://docs.inventree.org/en/stable/part/trackable/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/template/",
+      "target": "https://docs.inventree.org/en/stable/part/views/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/template/",
+      "target": "https://docs.inventree.org/en/stable/part/virtual/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/test/",
+      "target": "https://docs.inventree.org/en/stable/part/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/test/",
+      "target": "https://docs.inventree.org/en/stable/part/create/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/test/",
+      "target": "https://docs.inventree.org/en/stable/part/notification/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/test/",
+      "target": "https://docs.inventree.org/en/stable/part/pricing/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/test/",
+      "target": "https://docs.inventree.org/en/stable/part/revision/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/test/",
+      "target": "https://docs.inventree.org/en/stable/part/stocktake/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/test/",
+      "target": "https://docs.inventree.org/en/stable/part/template/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/test/",
+      "target": "https://docs.inventree.org/en/stable/part/test/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/test/",
+      "target": "https://docs.inventree.org/en/stable/part/trackable/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/test/",
+      "target": "https://docs.inventree.org/en/stable/part/views/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/test/",
+      "target": "https://docs.inventree.org/en/stable/part/virtual/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/trackable/",
+      "target": "https://docs.inventree.org/en/stable/part/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/trackable/",
+      "target": "https://docs.inventree.org/en/stable/part/create/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/trackable/",
+      "target": "https://docs.inventree.org/en/stable/part/notification/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/trackable/",
+      "target": "https://docs.inventree.org/en/stable/part/pricing/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/trackable/",
+      "target": "https://docs.inventree.org/en/stable/part/revision/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/trackable/",
+      "target": "https://docs.inventree.org/en/stable/part/stocktake/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/trackable/",
+      "target": "https://docs.inventree.org/en/stable/part/template/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/trackable/",
+      "target": "https://docs.inventree.org/en/stable/part/test/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/trackable/",
+      "target": "https://docs.inventree.org/en/stable/part/trackable/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/trackable/",
+      "target": "https://docs.inventree.org/en/stable/part/views/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/trackable/",
+      "target": "https://docs.inventree.org/en/stable/part/virtual/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/views/",
+      "target": "https://docs.inventree.org/en/stable/part/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/views/",
+      "target": "https://docs.inventree.org/en/stable/part/create/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/views/",
+      "target": "https://docs.inventree.org/en/stable/part/notification/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/views/",
+      "target": "https://docs.inventree.org/en/stable/part/pricing/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/views/",
+      "target": "https://docs.inventree.org/en/stable/part/revision/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/views/",
+      "target": "https://docs.inventree.org/en/stable/part/stocktake/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/views/",
+      "target": "https://docs.inventree.org/en/stable/part/template/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/views/",
+      "target": "https://docs.inventree.org/en/stable/part/test/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/views/",
+      "target": "https://docs.inventree.org/en/stable/part/trackable/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/views/",
+      "target": "https://docs.inventree.org/en/stable/part/views/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/views/",
+      "target": "https://docs.inventree.org/en/stable/part/virtual/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/virtual/",
+      "target": "https://docs.inventree.org/en/stable/part/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/virtual/",
+      "target": "https://docs.inventree.org/en/stable/part/create/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/virtual/",
+      "target": "https://docs.inventree.org/en/stable/part/notification/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/virtual/",
+      "target": "https://docs.inventree.org/en/stable/part/pricing/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/virtual/",
+      "target": "https://docs.inventree.org/en/stable/part/revision/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/virtual/",
+      "target": "https://docs.inventree.org/en/stable/part/stocktake/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/virtual/",
+      "target": "https://docs.inventree.org/en/stable/part/template/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/virtual/",
+      "target": "https://docs.inventree.org/en/stable/part/test/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/virtual/",
+      "target": "https://docs.inventree.org/en/stable/part/trackable/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/virtual/",
+      "target": "https://docs.inventree.org/en/stable/part/views/"
+    },
+    {
+      "source": "https://docs.inventree.org/en/stable/part/virtual/",
+      "target": "https://docs.inventree.org/en/stable/part/virtual/"
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "url": "https://docs.inventree.org/en/stable/part/pricing/",
+  "title": "Pricing - InvenTree Documentation",
+  "depth": 1,
+  "parent_url": "https://docs.inventree.org/en/stable/part/",
+  "child_links": [
+    "https://docs.inventree.org/en/stable/part/pricing/",
+    "https://docs.inventree.org/en/stable/part/",
+    "https://docs.inventree.org/en/stable/part/create/",
+    "https://docs.inventree.org/en/stable/part/virtual/",
+    "https://docs.inventree.org/en/stable/part/views/",
+    "https://docs.inventree.org/en/stable/part/trackable/",
+    "https://docs.inventree.org/en/stable/part/revision/",
+    "https://docs.inventree.org/en/stable/part/template/",
+    "https://docs.inventree.org/en/stable/part/test/",
+    "https://docs.inventree.org/en/stable/part/stocktake/",
+    "https://docs.inventree.org/en/stable/part/notification/"
+  ],
+  "markdown_path": "markdown/en/stable/part/pricing/index.md",
+  "html_path": "html/en/stable/part/pricing/index.html",
+  "metadata_path": "metadata/en/stable/part/pricing/index.json",
+  "images": [
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/logo.png",
+      "local_path": "images/en/stable/part/pricing/index/89fe0f1555-logo.png"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/images/part/pricing_overview.png",
+      "local_path": "images/en/stable/part/pricing/index/5af982ac5d-pricing_overview.png"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/images/part/pricing_internal.png",
+      "local_path": "images/en/stable/part/pricing/index/05b999dfe9-pricing_internal.png"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/images/part/pricing_purchase_history.png",
+      "local_path": "images/en/stable/part/pricing/index/832a372def-pricing_purchase_history.png"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/images/part/pricing_supplier.png",
+      "local_path": "images/en/stable/part/pricing/index/a2d5370379-pricing_supplier.png"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/images/part/pricing_bom.png",
+      "local_path": "images/en/stable/part/pricing/index/311238a503-pricing_bom.png"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/images/part/pricing_variants.png",
+      "local_path": "images/en/stable/part/pricing/index/323bb3f6fd-pricing_variants.png"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/images/part/pricing_sale_price_breaks.png",
+      "local_path": "images/en/stable/part/pricing/index/78c9c9d036-pricing_sale_price_breaks.png"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/images/part/pricing_sale_history.png",
+      "local_path": "images/en/stable/part/pricing/index/7d82d8be74-pricing_sale_history.png"
+    }
+  ],
+  "attachments": [],
+  "asset_download_failures": []
+}

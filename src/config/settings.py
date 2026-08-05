@@ -10,4 +10,5 @@ EXECUTION_MODE = ExecutionMode.MCP
 GENERATE_ROBOT = True
 INVENTREE_BASE_URL = "https://demo.inventree.org/web/login"
 PLAYWRIGHT_MCP_SERVER = "http://localhost:8931"
+DOCUMENTATION_URL = "https://docs.inventree.org/en/stable/part/"
 DEBUG = False

@@ -1,0 +1,34 @@
+{
+  "url": "https://docs.inventree.org/en/stable/part/test/",
+  "title": "Part Test Templates - InvenTree Documentation",
+  "depth": 1,
+  "parent_url": "https://docs.inventree.org/en/stable/part/",
+  "child_links": [
+    "https://docs.inventree.org/en/stable/part/test/",
+    "https://docs.inventree.org/en/stable/part/",
+    "https://docs.inventree.org/en/stable/part/create/",
+    "https://docs.inventree.org/en/stable/part/virtual/",
+    "https://docs.inventree.org/en/stable/part/views/",
+    "https://docs.inventree.org/en/stable/part/trackable/",
+    "https://docs.inventree.org/en/stable/part/revision/",
+    "https://docs.inventree.org/en/stable/part/template/",
+    "https://docs.inventree.org/en/stable/part/pricing/",
+    "https://docs.inventree.org/en/stable/part/stocktake/",
+    "https://docs.inventree.org/en/stable/part/notification/"
+  ],
+  "markdown_path": "markdown/en/stable/part/test/index.md",
+  "html_path": "html/en/stable/part/test/index.html",
+  "metadata_path": "metadata/en/stable/part/test/index.json",
+  "images": [
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/logo.png",
+      "local_path": "images/en/stable/part/test/index/89fe0f1555-logo.png"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/images/part/part_test_templates.png",
+      "local_path": "images/en/stable/part/test/index/b5ba0ab9e9-part_test_templates.png"
+    }
+  ],
+  "attachments": [],
+  "asset_download_failures": []
+}

@@ -1,0 +1,50 @@
+{
+  "url": "https://docs.inventree.org/en/stable/part/stocktake/",
+  "title": "Part Stocktake - InvenTree Documentation",
+  "depth": 1,
+  "parent_url": "https://docs.inventree.org/en/stable/part/",
+  "child_links": [
+    "https://docs.inventree.org/en/stable/part/stocktake/",
+    "https://docs.inventree.org/en/stable/part/",
+    "https://docs.inventree.org/en/stable/part/create/",
+    "https://docs.inventree.org/en/stable/part/virtual/",
+    "https://docs.inventree.org/en/stable/part/views/",
+    "https://docs.inventree.org/en/stable/part/trackable/",
+    "https://docs.inventree.org/en/stable/part/revision/",
+    "https://docs.inventree.org/en/stable/part/template/",
+    "https://docs.inventree.org/en/stable/part/test/",
+    "https://docs.inventree.org/en/stable/part/pricing/",
+    "https://docs.inventree.org/en/stable/part/notification/"
+  ],
+  "markdown_path": "markdown/en/stable/part/stocktake/index.md",
+  "html_path": "html/en/stable/part/stocktake/index.html",
+  "metadata_path": "metadata/en/stable/part/stocktake/index.json",
+  "images": [
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/logo.png",
+      "local_path": "images/en/stable/part/stocktake/index/89fe0f1555-logo.png"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/images/part/part_stocktake_tab.png",
+      "local_path": "images/en/stable/part/stocktake/index/a5f50f2828-part_stocktake_tab.png"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/images/part/part_stocktake_enable_tab.png",
+      "local_path": "images/en/stable/part/stocktake/index/772ea04c19-part_stocktake_enable_tab.png"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/images/part/part_stocktake_manual.png",
+      "local_path": "images/en/stable/part/stocktake/index/0101e8d5f9-part_stocktake_manual.png"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/images/part/stocktake_report_dashboard.png",
+      "local_path": "images/en/stable/part/stocktake/index/9d3b791625-stocktake_report_dashboard.png"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/images/part/part_stocktake_settings.png",
+      "local_path": "images/en/stable/part/stocktake/index/0e967bd3fe-part_stocktake_settings.png"
+    }
+  ],
+  "attachments": [],
+  "asset_download_failures": []
+}
