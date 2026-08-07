@@ -1,0 +1,50 @@
+{
+  "url": "https://docs.inventree.org/en/stable/part/",
+  "title": "Parts - InvenTree Documentation",
+  "depth": 0,
+  "parent_url": "https://docs.inventree.org/en/stable/part/",
+  "child_links": [
+    "https://docs.inventree.org/en/stable/part/",
+    "https://docs.inventree.org/en/stable/part/create/",
+    "https://docs.inventree.org/en/stable/part/virtual/",
+    "https://docs.inventree.org/en/stable/part/views/",
+    "https://docs.inventree.org/en/stable/part/trackable/",
+    "https://docs.inventree.org/en/stable/part/revision/",
+    "https://docs.inventree.org/en/stable/part/template/",
+    "https://docs.inventree.org/en/stable/part/test/",
+    "https://docs.inventree.org/en/stable/part/pricing/",
+    "https://docs.inventree.org/en/stable/part/stocktake/",
+    "https://docs.inventree.org/en/stable/part/notification/"
+  ],
+  "markdown_path": "markdown/en/stable/part/index.md",
+  "html_path": "html/en/stable/part/index.html",
+  "metadata_path": "metadata/en/stable/part/index.json",
+  "images": [
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/logo.png",
+      "local_path": "images/en/stable/part/index/89fe0f1555-logo.png"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/images/part/part_category.png",
+      "local_path": "images/en/stable/part/index/a0dde118f2-part_category.png"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/images/part/part_units.png",
+      "local_path": "images/en/stable/part/index/6959f5a016-part_units.png"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/images/part/part_units_invalid.png",
+      "local_path": "images/en/stable/part/index/d871cd6224-part_units_invalid.png"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/images/part/part_image_example.png",
+      "local_path": "images/en/stable/part/index/61c3c1e446-part_image_example.png"
+    },
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/images/part/part_image_upload.png",
+      "local_path": "images/en/stable/part/index/3939447bf0-part_image_upload.png"
+    }
+  ],
+  "attachments": [],
+  "asset_download_failures": []
+}

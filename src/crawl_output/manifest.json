@@ -1,0 +1,27 @@
+{
+  "root_url": "https://docs.inventree.org/en/stable/part/",
+  "started_at": "2026-08-04T20:25:41.473271+00:00",
+  "completed_at": "2026-08-04T20:25:58.942633+00:00",
+  "elapsed_seconds": 17.47,
+  "configuration": {
+    "max_depth": 5,
+    "max_pages": 200
+  },
+  "pages_crawled": 11,
+  "assets_downloaded": 51,
+  "failed_pages": [],
+  "failed_asset_downloads": [],
+  "visited_urls": [
+    "https://docs.inventree.org/en/stable/part/",
+    "https://docs.inventree.org/en/stable/part/create/",
+    "https://docs.inventree.org/en/stable/part/notification/",
+    "https://docs.inventree.org/en/stable/part/pricing/",
+    "https://docs.inventree.org/en/stable/part/revision/",
+    "https://docs.inventree.org/en/stable/part/stocktake/",
+    "https://docs.inventree.org/en/stable/part/template/",
+    "https://docs.inventree.org/en/stable/part/test/",
+    "https://docs.inventree.org/en/stable/part/trackable/",
+    "https://docs.inventree.org/en/stable/part/views/",
+    "https://docs.inventree.org/en/stable/part/virtual/"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "url": "https://docs.inventree.org/en/stable/part/trackable/",
+  "title": "Trackable Parts - InvenTree Documentation",
+  "depth": 1,
+  "parent_url": "https://docs.inventree.org/en/stable/part/",
+  "child_links": [
+    "https://docs.inventree.org/en/stable/part/trackable/",
+    "https://docs.inventree.org/en/stable/part/",
+    "https://docs.inventree.org/en/stable/part/create/",
+    "https://docs.inventree.org/en/stable/part/virtual/",
+    "https://docs.inventree.org/en/stable/part/views/",
+    "https://docs.inventree.org/en/stable/part/revision/",
+    "https://docs.inventree.org/en/stable/part/template/",
+    "https://docs.inventree.org/en/stable/part/test/",
+    "https://docs.inventree.org/en/stable/part/pricing/",
+    "https://docs.inventree.org/en/stable/part/stocktake/",
+    "https://docs.inventree.org/en/stable/part/notification/"
+  ],
+  "markdown_path": "markdown/en/stable/part/trackable/index.md",
+  "html_path": "html/en/stable/part/trackable/index.html",
+  "metadata_path": "metadata/en/stable/part/trackable/index.json",
+  "images": [
+    {
+      "url": "https://docs.inventree.org/en/stable/assets/logo.png",
+      "local_path": "images/en/stable/part/trackable/index/89fe0f1555-logo.png"
+    }
+  ],
+  "attachments": [],
+  "asset_download_failures": []
+}

@@ -1,10 +1,13 @@
 # Virtual Environment
 .venv/
+.venv312/
 
 # Python
 __pycache__/
 *.pyc
-
+__pycache__/
+*.pyc
+output.txt
 # Environment Variables
 .env
 
@@ -24,3 +27,13 @@ output/
 dist/
 build/
 *.egg-info/
+
+
+# Robot Framework Reports
+robot/reports/
+.playwright-mcp/
+
+
+robot/tests/generated.robot
+robot/resources/generated_keywords.resource
+.artifacts
