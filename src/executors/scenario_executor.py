@@ -34,27 +34,53 @@ class ScenarioExecutor:
         # 1. Plain string
         # 2. QA Brain scenario object
         # --------------------------------------------------
+###
+        #
+        # Support both:
+        #
+        # 1. Business Goal
+        # 2. Pre-generated Test Case
+        #
 
-        if isinstance(scenario, str):
+        if isinstance(
+            scenario,
+            str,
+        ):
+
             business_goal = scenario
+
+            test_case = await self.business_planner.create_plan(
+
+                business_goal,
+
+            )
+
+        elif isinstance(
+            scenario,
+            dict,
+        ) and "steps" in scenario:
+
+            #
+            # Already planned by AI-QEP
+            #
+
+            test_case = scenario
+
+            business_goal = test_case.get(
+                "title",
+                "",
+            )
+
         else:
+
             business_goal = scenario["title"]
 
-        print("========== SCENARIO ENTRY ==========")
-        print("session =", self.business_executor.client.session)
-        print("dispatcher =", self.business_executor.client.session._dispatcher)
+            test_case = await self.business_planner.create_plan(
 
-        Logger.section("Business Goal")
-        Logger.text(business_goal)
+                business_goal,
 
-        # --------------------------------------------------
-        # Generate Test Case
-        # --------------------------------------------------
-
-        test_case = await self.business_planner.create_plan(
-            business_goal,
-        )
-
+            )
+###
         Logger.section("Generated Test Case")
         Logger.json(test_case)
 

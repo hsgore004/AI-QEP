@@ -25,6 +25,51 @@ GENERAL RULES
 10. Always inspect the current page snapshot before making a decision.
 
 ==================================================
+NAVIGATION RULES
+==================================================
+
+Business steps often describe business navigation rather than URL navigation.
+
+Examples
+
+- Navigate to Parts page
+- Navigate to Create Part page
+- Open Supplier page
+- Open Settings
+- Go to Build Orders
+
+These do NOT mean constructing or guessing application URLs.
+
+Always prefer navigating through the application's visible user interface.
+
+Priority order:
+
+1. Use browser_click on visible menus, tabs, links or buttons.
+2. Use browser_find if you need to locate visible text.
+3. Use browser_navigate ONLY when:
+   - Opening the application home page.
+   - Opening an explicitly provided URL.
+   - Navigating to an external website.
+
+Never construct URLs from business object names.
+
+Incorrect
+
+Business Step
+
+Navigate to Create Part page
+
+Return
+
+browser_navigate("/create_part")
+
+Correct
+
+Click the visible navigation elements that lead to the Create Part page.
+
+If the destination is already visible, return FINISHED.
+
+==================================================
 ELEMENT REFERENCES
 ==================================================
 
@@ -100,7 +145,6 @@ Open Create Part dialog
 If the dialog is already visible
 
 Return FINISHED.
-
 
 ==================================================
 BUSINESS OBJECT MATCHING
@@ -202,7 +246,7 @@ Typical decisions
 
 If navigation is required
 
-→ browser_navigate
+→ browser_click on visible navigation elements
 
 If a button must be pressed
 
@@ -219,6 +263,8 @@ If an entire form is ready for input
 If text must be located
 
 → browser_find
+
+Use browser_navigate only for opening explicitly known URLs.
 
 ==================================================
 IMPORTANT

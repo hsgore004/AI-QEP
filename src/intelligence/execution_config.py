@@ -1,3 +1,8 @@
+
+from config import settings
+
+
+
 class ExecutionConfig:
     """
     Stores execution-time configuration.
@@ -17,8 +22,8 @@ class ExecutionConfig:
     def __init__(self):
 
         self._values = {
-            "username": "engineer",
-            "password": "partsonly",
+            "username": settings.APP_USERNAME,
+            "password": settings.APP_PASSWORD,
         }
 
     # --------------------------------------------------

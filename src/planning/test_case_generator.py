@@ -12,19 +12,77 @@ You are given:
 2. Extracted business knowledge
 3. Business entities
 
-Your responsibility is to generate comprehensive manual test cases.
-
-Generate test cases that validate:
-
-- Functional behaviour
-- Business rules
-- Valid user actions
-- Invalid user actions
-- Boundary conditions where applicable
+Your responsibility is to generate comprehensive executable manual test cases.
 
 Use only the supplied documentation.
 
 Do not invent application features.
+
+Generate test cases that cover:
+
+- Functional behaviour
+- Business rules
+- Positive scenarios
+- Negative scenarios
+- User validations
+- Boundary conditions where applicable
+
+Each test case must be directly executable.
+
+Rules
+
+- Every test case must contain executable steps.
+- Every step must be one of:
+    ACTION
+    VERIFY
+    SYNC
+- ACTION performs a user action.
+- VERIFY validates the UI or business outcome.
+- SYNC is used only when waiting is required.
+- VERIFY steps MUST contain "expected_result".
+- ACTION steps MUST NOT contain "expected_result".
+- Number steps sequentially starting from 1.
+
+==================================================
+EXECUTION REQUIREMENTS
+==================================================
+
+The generated test case will be executed directly by an autonomous execution engine.
+
+Therefore every test case MUST contain executable business steps.
+
+Rules:
+
+1. Every step must represent exactly ONE business action.
+
+2. Never combine multiple actions.
+
+3. Never skip intermediate navigation.
+
+4. Never assume a page or dialog is already open.
+
+5. If a business function requires navigating through multiple pages, generate every intermediate business destination.
+
+6. If a form must be completed:
+
+   - Populate all mandatory fields.
+   - Click the appropriate action button.
+   - Verify the final business outcome.
+
+7. Do NOT generate generic steps such as:
+
+   - Create Part
+   - Fill Details
+   - Submit Form
+
+Instead generate executable business steps such as:
+
+- Navigate to Parts
+- Open Create Part page
+- Populate all mandatory Part details
+- Click Create button
+- Verify Part was created
+
 
 Return ONLY valid JSON.
 
@@ -43,11 +101,33 @@ Format
 
             "preconditions": [],
 
-            "steps": [],
+            "priority": "High",
 
-            "expected_results": [],
+            "steps": [
 
-            "priority": "High"
+                {
+
+                    "step": 1,
+
+                    "type": "ACTION",
+
+                    "description": ""
+
+                },
+
+                {
+
+                    "step": 2,
+
+                    "type": "VERIFY",
+
+                    "description": "",
+
+                    "expected_result": ""
+
+                }
+
+            ]
 
         }
 
@@ -120,9 +200,10 @@ class TestCaseGenerator(
                 "Test Case Generator must return JSON."
             )
 
-        if "test_cases" not in response:
-
-            response["test_cases"] = []
+        response.setdefault(
+            "test_cases",
+            [],
+        )
 
         if not isinstance(
             response["test_cases"],
@@ -165,18 +246,13 @@ class TestCaseGenerator(
             )
 
             test_case.setdefault(
-                "steps",
-                [],
-            )
-
-            test_case.setdefault(
-                "expected_results",
-                [],
-            )
-
-            test_case.setdefault(
                 "priority",
                 "Medium",
+            )
+
+            test_case.setdefault(
+                "steps",
+                [],
             )
 
             if not isinstance(
@@ -197,14 +273,52 @@ class TestCaseGenerator(
                     "'steps' must be a list."
                 )
 
-            if not isinstance(
-                test_case["expected_results"],
-                list,
-            ):
+            for step in test_case["steps"]:
 
-                raise RuntimeError(
-                    "'expected_results' must be a list."
+                if not isinstance(
+                    step,
+                    dict,
+                ):
+
+                    raise RuntimeError(
+                        "Each step must be an object."
+                    )
+
+                step.setdefault(
+                    "step",
+                    1,
                 )
+
+                step.setdefault(
+                    "type",
+                    "ACTION",
+                )
+
+                step.setdefault(
+                    "description",
+                    "",
+                )
+
+                if step["type"] not in (
+
+                    "ACTION",
+
+                    "VERIFY",
+
+                    "SYNC",
+
+                ):
+
+                    raise RuntimeError(
+                        f"Invalid step type: {step['type']}"
+                    )
+
+                if step["type"] == "VERIFY":
+
+                    step.setdefault(
+                        "expected_result",
+                        "",
+                    )
 
         return True
 
@@ -220,8 +334,12 @@ class TestCaseGenerator(
         return f"""
 Documentation Chunk
 
+==================================================
+APPLICATION DOCUMENTATION
+==================================================
+
 Chunk ID
----------
+--------
 {chunk.get("id", "")}
 
 Page Title
@@ -240,23 +358,106 @@ Documentation
 -------------
 {chunk.get("text", "")}
 
-Knowledge
----------
+==================================================
+EXTRACTED KNOWLEDGE
+==================================================
+
 {chunk.get("knowledge", {})}
 
-Entities
---------
+==================================================
+BUSINESS ENTITIES
+==================================================
+
 {chunk.get("entities", {})}
 
-Generate comprehensive test cases.
+==================================================
+TEST CASE GENERATION REQUIREMENTS
+==================================================
 
-Requirements
+Generate comprehensive executable manual test cases.
 
-- Cover positive scenarios.
-- Cover negative scenarios.
-- Cover business rules.
-- Cover validations.
-- Cover important user flows.
+The documentation above is the ONLY source of truth.
+
+Use the documentation to understand:
+
+- application navigation
+- menus
+- pages
+- dialogs
+- business workflows
+- business rules
+- validations
+- relationships between pages
+- relationships between business entities
+
+Never invent application behaviour.
+
+Never invent navigation.
+
+Never assume shortcuts.
+
+If the documentation describes intermediate navigation,
+generate those navigation steps.
+
+Example
+
+Documentation
+
+Parts
+    ->
+Create Part
+
+Generate
+
+- Navigate to Parts
+- Open Create Part page
+
+Do NOT generate
+
+- Navigate directly to Create Part page
+
+unless the documentation explicitly supports direct navigation.
+
+==================================================
+TEST CASE REQUIREMENTS
+==================================================
+
+Generate:
+
+- Positive scenarios
+- Negative scenarios
+- Validation scenarios
+- Business rule scenarios
+- End-to-end business workflows
+
+Every generated test case must be executable.
+
+Every step must represent ONE business action.
+
+Never combine multiple business actions into one step.
+
+Never skip:
+
+- navigation
+- intermediate pages
+- dialogs
+- workflow transitions
+
+When a form is encountered:
+
+- Populate all mandatory fields.
+- Click the appropriate business action.
+- Verify the final business outcome.
+
+Do not generate execution-engine checks such as:
+
+- Verify textbox populated
+- Verify button clicked
+- Verify dialog opened
+
+Those are handled by the execution engine.
+
+Generate realistic business workflows based only on the supplied documentation.
 
 Return ONLY valid JSON.
 """

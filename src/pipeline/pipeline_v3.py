@@ -38,6 +38,10 @@ from utils.test_case_markdown_writer import (
     TestCaseMarkdownWriter,
 )
 
+from executors.execution_factory import (
+    create_execution_runner,
+)
+
 class AIQEPPipelineV3:
     """
     AI-QEP V3
@@ -100,13 +104,22 @@ class AIQEPPipelineV3:
     # --------------------------------------------------
     # Run
     # --------------------------------------------------
-
+    
     async def run(
         self,
         documentation_url: str,
     ):
+        if settings.TEST_CASE_FILE is None:
 
-        self._create_run_folder()
+            self._create_run_folder()
+
+        else:
+
+            self.output_dir = Path(
+                settings.TEST_CASE_FILE,
+            ).parent
+
+            self.run_id = self.output_dir.name
 
         self._print_banner()
 
@@ -118,47 +131,72 @@ class AIQEPPipelineV3:
         print(f"Run ID        : {self.run_id}")
         print(f"Output Folder : {self.output_dir}")
 
+
+        #
+        # Skip pipeline if an existing test case file is supplied
+        #
+
+        skip_generation = (
+            settings.TEST_CASE_FILE is not None
+        )
+
         #
         # --------------------------------------------------
         # Stage 1
         # --------------------------------------------------
         #
+        if skip_generation:
 
-        documentation_builder = DocumentationKnowledgeBuilder()
+            print()
+            print("=" * 80)
+            print("Stage 1 : Documentation Builder")
+            print("=" * 80)
+            print("Skipping stage (using existing test_cases.json).")
 
-        await self._execute_stage(
+        else:
+            documentation_builder = DocumentationKnowledgeBuilder()
 
-            stage_name="Stage 1 : Documentation Builder",
+            await self._execute_stage(
 
-            stage_callable=documentation_builder.run,
+                stage_name="Stage 1 : Documentation Builder",
 
-            expected_output="documentation.json",
+                stage_callable=documentation_builder.run,
 
-            documentation_url=documentation_url,
+                expected_output="documentation.json",
 
-            output_dir=self.output_dir,
+                documentation_url=documentation_url,
 
-        )
+                output_dir=self.output_dir,
+
+            )
 
         #
         # Stage 2
         #
+        if skip_generation:
 
-        qa_knowledge_builder = QAKnowledgeBuilder()
+            print()
+            print("=" * 80)
+            print("Stage 2 : QA Knowledge Builder")
+            print("=" * 80)
+            print("Skipping stage (using existing test_cases.json).")
 
-        await self._execute_stage(
+        else:
+            qa_knowledge_builder = QAKnowledgeBuilder()
 
-            stage_name="Stage 2 : QA Knowledge Builder",
+            await self._execute_stage(
 
-            stage_callable=qa_knowledge_builder.run,
+                stage_name="Stage 2 : QA Knowledge Builder",
 
-            expected_output="qa_knowledge.json",
+                stage_callable=qa_knowledge_builder.run,
 
-            documentation_file=self.output_dir / "documentation.json",
+                expected_output="qa_knowledge.json",
 
-            output_dir=self.output_dir,
+                documentation_file=self.output_dir / "documentation.json",
 
-        )
+                output_dir=self.output_dir,
+
+            )
 
         #
         # Stage 3
@@ -168,52 +206,56 @@ class AIQEPPipelineV3:
         print("=" * 80)
         print("Stage 3 : Knowledge Extractor")
         print("=" * 80)
+        if skip_generation:
 
-        knowledge_extractor = KnowledgeExtractor(
-            self.llm_service,
-        )
+            print("Skipping stage (using existing test_cases.json).")
 
-        qa_knowledge = self._read_json(
-            self.output_dir / "qa_knowledge.json",
-        )
+        else:
+            knowledge_extractor = KnowledgeExtractor(
+                self.llm_service,
+            )
+
+            qa_knowledge = self._read_json(
+                self.output_dir / "qa_knowledge.json",
+            )
 
 
-#==========================
-        for page_index, page in enumerate(
-            qa_knowledge["pages"],
-            start=1,
-        ):
+    #==========================
+            for page_index, page in enumerate(
+                qa_knowledge["pages"],
+                start=1,
+            ):
+
+                print()
+                print(
+                    f"Page {page_index}/{len(qa_knowledge['pages'])} : "
+                    f"{page['title']}"
+                )
+
+                await self._process_page(
+
+                    page,
+
+                    knowledge_extractor,
+
+                )
+
+
+    #============================
+
+            knowledge_file = (
+                self.output_dir
+                / "knowledge.json"
+            )
+
+            self._write_json(
+                knowledge_file,
+                qa_knowledge,
+            )
 
             print()
-            print(
-                f"Page {page_index}/{len(qa_knowledge['pages'])} : "
-                f"{page['title']}"
-            )
-
-            await self._process_page(
-
-                page,
-
-                knowledge_extractor,
-
-            )
-
-
-#============================
-
-        knowledge_file = (
-            self.output_dir
-            / "knowledge.json"
-        )
-
-        self._write_json(
-            knowledge_file,
-            qa_knowledge,
-        )
-
-        print()
-        print("[OK]")
-        print(f"Output : {knowledge_file}")
+            print("[OK]")
+            print(f"Output : {knowledge_file}")
 
 
         #
@@ -224,50 +266,54 @@ class AIQEPPipelineV3:
         print("=" * 80)
         print("Stage 4 : Entity Extractor")
         print("=" * 80)
+        if skip_generation:
 
-        entity_extractor = EntityExtractor(
-            self.llm_service,
-        )
+            print("Skipping stage (using existing test_cases.json).")
 
-        knowledge = self._read_json(
-            self.output_dir / "knowledge.json",
-        )
+        else:
+            entity_extractor = EntityExtractor(
+                self.llm_service,
+            )
 
-        for page_index, page in enumerate(
-            knowledge["pages"],
-            start=1,
-        ):
+            knowledge = self._read_json(
+                self.output_dir / "knowledge.json",
+            )
+
+            for page_index, page in enumerate(
+                knowledge["pages"],
+                start=1,
+            ):
+
+                print()
+                print(
+                    f"Page {page_index}/{len(knowledge['pages'])} : "
+                    f"{page['title']}"
+                )
+
+                await self._process_page(
+
+                    page,
+
+                    entity_extractor,
+
+                )
+
+            entities_file = (
+                self.output_dir
+                / "entities.json"
+            )
+
+            self._write_json(
+
+                entities_file,
+
+                knowledge,
+
+            )
 
             print()
-            print(
-                f"Page {page_index}/{len(knowledge['pages'])} : "
-                f"{page['title']}"
-            )
-
-            await self._process_page(
-
-                page,
-
-                entity_extractor,
-
-            )
-
-        entities_file = (
-            self.output_dir
-            / "entities.json"
-        )
-
-        self._write_json(
-
-            entities_file,
-
-            knowledge,
-
-        )
-
-        print()
-        print("[OK]")
-        print(f"Output : {entities_file}")
+            print("[OK]")
+            print(f"Output : {entities_file}")
 
 
         #
@@ -278,112 +324,141 @@ class AIQEPPipelineV3:
         print("=" * 80)
         print("Stage 5 : Test Case Generator")
         print("=" * 80)
+        if skip_generation:
 
-        test_case_generator = TestCaseGenerator(
-            self.llm_service,
-        )
-
-        entities = self._read_json(
-            self.output_dir / "entities.json",
-        )
-
-        for page_index, page in enumerate(
-            entities["pages"],
-            start=1,
-        ):
-
-            print()
-            print(
-                f"Page {page_index}/{len(entities['pages'])} : "
-                f"{page['title']}"
+            print("Skipping stage (using existing test_cases.json).")
+            test_cases_file = Path(
+                settings.TEST_CASE_FILE,
+            )
+        else:
+            test_case_generator = TestCaseGenerator(
+                self.llm_service,
             )
 
-            await self._process_page(
-
-                page,
-
-                test_case_generator,
-
+            entities = self._read_json(
+                self.output_dir / "entities.json",
             )
 
-        test_cases_file = (
-            self.output_dir
-            / "test_cases.json"
-        )
+            for page_index, page in enumerate(
+                entities["pages"],
+                start=1,
+            ):
 
-        self._write_json(
-
-            test_cases_file,
-
-            entities,
-
-        )
-
-        print()
-        print("[OK]")
-        print(f"Output : {test_cases_file}")
-
-
-
-        total_pages = len(entities["pages"])
-
-        total_chunks = 0
-        total_test_cases = 0
-
-        for page in entities["pages"]:
-
-            total_chunks += len(page["chunks"])
-
-            for chunk in page["chunks"]:
-
-                total_test_cases += len(
-                    chunk.get(
-                        "test_cases",
-                        [],
-                    )
+                print()
+                print(
+                    f"Page {page_index}/{len(entities['pages'])} : "
+                    f"{page['title']}"
                 )
 
+                await self._process_page(
+
+                    page,
+
+                    test_case_generator,
+
+                )
+
+            test_cases_file = (
+                self.output_dir
+                / "test_cases.json"
+            )
+
+            self._write_json(
+
+                test_cases_file,
+
+                entities,
+
+            )
+
+            print()
+            print("[OK]")
+            print(f"Output : {test_cases_file}")
+
+
+
+            total_pages = len(entities["pages"])
+
+            total_chunks = 0
+            total_test_cases = 0
+
+            for page in entities["pages"]:
+
+                total_chunks += len(page["chunks"])
+
+                for chunk in page["chunks"]:
+
+                    total_test_cases += len(
+                        chunk.get(
+                            "test_cases",
+                            [],
+                        )
+                    )
+
+            print()
+            print("=" * 80)
+            print("TEST CASE GENERATION SUMMARY")
+            print("=" * 80)
+            print(f"Pages       : {total_pages}")
+            print(f"Chunks      : {total_chunks}")
+            print(f"Test Cases  : {total_test_cases}")
+            print("=" * 80)
+
+            test_cases_file = (
+                self.output_dir
+                / "test_cases.json"
+            )
+
+            self._write_json(
+
+                test_cases_file,
+
+                entities,
+
+            )
+
+            #
+            # Markdown
+            #
+
+            writer = TestCaseMarkdownWriter()
+
+            writer.write(
+
+                input_file=test_cases_file,
+
+                output_file=self.output_dir / "test_cases.md",
+
+            )
+
+            print()
+            print("[OK]")
+            print(f"Output : {test_cases_file}")
+
+
+
+        #
+        # Stage 6
+        #
+
         print()
         print("=" * 80)
-        print("TEST CASE GENERATION SUMMARY")
-        print("=" * 80)
-        print(f"Pages       : {total_pages}")
-        print(f"Chunks      : {total_chunks}")
-        print(f"Test Cases  : {total_test_cases}")
+        print("Stage 6 : Test Case Execution")
         print("=" * 80)
 
-        test_cases_file = (
-            self.output_dir
-            / "test_cases.json"
-        )
+        execution_runner = create_execution_runner()
 
-        self._write_json(
+        await execution_runner.execute(
 
-            test_cases_file,
-
-            entities,
-
-        )
-
-        #
-        # Markdown
-        #
-
-        writer = TestCaseMarkdownWriter()
-
-        writer.write(
-
-            input_file=test_cases_file,
-
-            output_file=self.output_dir / "test_cases.md",
+            output_dir=self.output_dir,
 
         )
 
         print()
         print("[OK]")
-        print(f"Output : {test_cases_file}")
+        print("Execution completed.")
 
-
+###### internal keywords
     def _create_run_folder(self):
 
         self.run_id = datetime.now().strftime(

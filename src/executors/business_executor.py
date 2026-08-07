@@ -204,7 +204,6 @@ class BusinessExecutor:
                 print("\n==========================================\n")
 
 
-
             # ====================================================
             # Verification Flow
             # ====================================================
@@ -212,8 +211,8 @@ class BusinessExecutor:
             if keyword.lower().startswith("verify"):
 
                 result = await self.verification_agent.verify(
-                keyword,
-                snapshot_text,
+                    keyword,
+                    snapshot_text,
                 )
 
                 status = result["status"]
@@ -229,10 +228,16 @@ class BusinessExecutor:
                         f"Verification failed: {keyword}"
                     )
 
+                #
+                # NOT_YET
+                #
+
+                print("[VERIFY] Waiting for UI to stabilize...")
+
                 await self.client.call_tool(
                     "browser_wait_for",
                     {
-                        "time": 2,
+                        "time": 3,
                     },
                 )
 
@@ -265,11 +270,7 @@ class BusinessExecutor:
                 # ----------------------------------------------------
                 if (
                     last["tool"] == "browser_click"
-                    and (
-                        keyword.lower().startswith("click")
-                        or keyword.lower().startswith("navigate")
-                        or keyword.lower().startswith("create")
-                    )
+                    and keyword.lower().startswith("click")
                 ):
                     print("[Executor] Click already performed. Marking step complete.")
                     return
@@ -395,6 +396,10 @@ class BusinessExecutor:
                 tool["tool"],
                 tool["arguments"],
             )
+
+            print("\n========== RAW MCP RESULT ==========")
+            print(repr(result))
+            print("====================================\n")
 
             Logger.subsection(f"{tool['tool']} Result")
             Logger.text(result)

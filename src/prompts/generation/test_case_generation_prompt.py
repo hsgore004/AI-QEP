@@ -833,33 +833,21 @@ Response
 
         {
             "step": 8,
-            "type": "SYNC",
-            "description": "Wait until all mandatory business information has been accepted"
+            "type": "ACTION",
+            "description": "Click Create button"
         },
 
         {
             "step": 9,
-            "type": "VERIFY",
-            "description": "Verify all mandatory business information is displayed correctly"
+            "type": "SYNC",
+            "description": "Wait until Part Details page is displayed"
         },
 
         {
             "step": 10,
-            "type": "ACTION",
-            "description": "Submit the Part"
-        },
-
-        {
-            "step": 11,
-            "type": "SYNC",
-            "description": "Wait until save operation completes"
-        },
-
-        {
-            "step": 12,
             "type": "VERIFY",
             "description": "Verify the Part appears in the Parts list"
-        }
+        },
 
     ],
 
